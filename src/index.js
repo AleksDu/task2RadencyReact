@@ -1,16 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom/client";
 import App from "./App";
 import "modern-normalize/modern-normalize.css";
 import "./index.css";
-import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
+const rootElement = document.getElementById("root");
+
+
+rootElement.render(
+  <Provider store={store}>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </Provider>
+  
 );
