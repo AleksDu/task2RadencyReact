@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
-
+import './App.scss'
+import Entitys from "./components/entytys/Entitys";
 
 const containerStyles = {
   maxWidth: 1170,
@@ -15,7 +16,7 @@ export default function App() {
 
       <Switch>
         <Route path="/skip-first-render">
-          {/* <SkipEffectOnFirstRender /> */}
+          <Entitys />
         </Route>
 
         {/* <Route path="/pokemon">
