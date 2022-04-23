@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 import EmptyShow from './EmptyShow';
+
 function Entitys({ archiveNote, openModal, deleteNote, notesArray }) {
   
     const allActive = notesArray.filter(note => note.isArchived === false);
@@ -52,11 +53,13 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        openModal: (id) => dispatch(openModal(id)),
-        deleteNote: (id) => dispatch(deleteNote(id)),
-        archiveNote: (id) => dispatch(archiveNote(id))
+        openModal: (e) => dispatch(actions.openModal(e)),
+        deleteNote: (e) => dispatch(actions.deleteNote(e.target.id)),
+        archiveNote: (e) => dispatch(actions.archiveNote(e.target.id)),
     };
-};
+}
+       
+    
 export default connect(mapStateToProps, mapDispatchToProps)(Entitys);
 
   

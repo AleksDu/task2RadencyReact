@@ -1,6 +1,12 @@
-import { ChangeEvent, useState } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions";
+import { useState } from "react";
 import { Switch } from "react-router-dom";
+
 const props = {
+    notes: [],
+    tableData: [],
+};
     
 function Form({
     onSubmit, props }) {
