@@ -1,7 +1,8 @@
 import { Switch, Route } from "react-router-dom";
 import './App.scss'
 import Entitys from "./components/entytys/Entitys";
-
+import Form from "./components/forms/Form";
+import Table from "./components/table/Table";
 const containerStyles = {
   maxWidth: 1170,
   marginLeft: "auto",
@@ -19,17 +20,8 @@ export default function App() {
           <Entitys />
         </Route>
 
-        {/* <Route path="/pokemon">
-          <PokemonView />
-        </Route>
-
-        <Route path="/counter">
-          <Counter />
-        </Route>
-
-        <Route path="/notes">
-          <Friends />
-        </Route> */}
+        <hr />
+        <Table />
       </Switch>
     </div>
   );
