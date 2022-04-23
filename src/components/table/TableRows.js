@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 function TableRows({ notesArray, onUpdate }) {
     UseEffect(() => {
-        const data getTableData()
+        const data=getTableData()
         onUpdate(data)
     })
 
@@ -25,7 +25,7 @@ function TableRows({ notesArray, onUpdate }) {
     }
 
     const tableData = getTableData()
-    cosnt tableMarkup = (tableData) => {
+    const tableMarkup = (tableData) => {
         const markup = tableData.map((category, index) => {
             const key = Object.keys(category)
             return (
@@ -40,8 +40,9 @@ function TableRows({ notesArray, onUpdate }) {
         return markup
     }
     return (
-        tableMarkup(tableData)
+        tableData.length > 0 ? tableMarkup(tableData) : <h3 className="c-3" style={{ color: "white", fontSize: 19 + 'px' }}>No data to display</h3>
     )
+        
 
 
 

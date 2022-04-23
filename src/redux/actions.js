@@ -6,3 +6,5 @@ export const editNote = createAction('note/edit');
 export const archive = createAction('note/archive');
 export const unarchive = createAction('note/unarchive');
 export const setTableData = createAction('note/setTableData');
+export const closeModal = createAction('note/closeModal');
+export const openModal = createAction('note/openModal');

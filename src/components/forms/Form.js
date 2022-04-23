@@ -1,15 +1,21 @@
+import { alert, defaultModules, defaults } from '@pnotify/core';
+import '@pnotify/core/dist/PNotify.css';
+import '@pnotify/core/dist/BrightTheme.css';
+import * as PnotifyMobile from 'pnotify-mobile';
+import 'pnotify-mobile/dist/pnotify.mobile.css';
+import 'pnotify/core/dist/Angeler.css';
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import { useState } from "react";
+import {v4 as uuid} from 'uuid';
 import { Switch } from "react-router-dom";
 
-const props = {
-    notes: [],
-    tableData: [],
-};
+defaultModules.set(PnotifyMobile, {});
+defaults.closerHover = false;
+
     
 function Form({
-    onSubmit, props }) {
+    onSubmit }) {
     const [text, setText] = useState("");
     const [category, setCategory] = useState('null');
 
@@ -31,9 +37,7 @@ function Form({
             return
         }
         const id = uuid()
-        const obj = SubmitNote
-
-        const SubmitNote={
+        const obj ={
             id,
             text,
             category,

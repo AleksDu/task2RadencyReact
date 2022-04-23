@@ -53,7 +53,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        openModal: (e) => dispatch(actions.openModal(e)),
+        openModal: (e) => dispatch(actions.openModal(e.target.id)),
         deleteNote: (e) => dispatch(actions.deleteNote(e.target.id)),
         archiveNote: (e) => dispatch(actions.archiveNote(e.target.id)),
     };
