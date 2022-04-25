@@ -2,12 +2,12 @@ import { alert, defaultModules } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import * as PNotifyMobile from '@pnotify/mobile';
 import '@pnotify/mobile/dist/PNotifyMobile.css';
-
 import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 import { useState } from 'react';
 import Swich from './Swich';
 import { v4 as uuid } from 'uuid';
+console.log('asdasd');
 
 defaultModules.set(PNotifyMobile, {});
 
