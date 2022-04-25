@@ -1,11 +1,13 @@
+// eslint-disable-next-line
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import EmptyShow from "./EmptyShow";
 
-function Entitys({ archiveNote, openModal, deleteNote, notesArray }) {
+function Entity({ archiveNote, openModal, deleteNote, notesArray }) {
   const allActive = notesArray.filter((note) => note.isArchived === false);
   const dates = allActive.map((note) => {
     const dateType =
+      // eslint-disable-next-line
       /(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}/g;
     const isMatch = [...note.text.matchAll(dateType)];
     const foundDate = isMatch.map((match) => {
@@ -20,7 +22,7 @@ function Entitys({ archiveNote, openModal, deleteNote, notesArray }) {
     return dates;
   });
 
-  const entitysMarkup = allActive.map((note, index) => {
+  const entityMarkup = allActive.map((note, index) => {
     const markup = (
       <div
         key={index}
@@ -60,7 +62,7 @@ function Entitys({ archiveNote, openModal, deleteNote, notesArray }) {
 
     return markup;
   });
-  return entitysMarkup.length > 0 ? entitysMarkup : <EmptyShow />;
+  return entityMarkup.length > 0 ? entityMarkup : <EmptyShow />;
 }
 const mapStateToProps = (state) => {
   return {
@@ -75,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Entitys);
+export default connect(mapStateToProps, mapDispatchToProps)(Entity);

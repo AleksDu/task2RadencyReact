@@ -1,17 +1,18 @@
-import { alert, defaultModules, defaults } from "@pnotify/core";
-import "@pnotify/core/dist/PNotify.css";
-import "@pnotify/core/dist/BrightTheme.css";
-import * as PnotifyMobile from "pnotify-mobile";
-import "pnotify-mobile/dist/pnotify.mobile.css";
-import "pnotify/core/dist/Angeler.css";
+// eslint-disable-next-line
+// import { alert, defaultModules, defaults } from "@pnotify/core";
+// import "@pnotify/core/dist/PNotify.css";
+// import * as PnotifyMobile from "pnotify-mobile";
+// import "pnotify-mobile/dist/pnotify.mobile.css";
+// import "pnotify/core/dist/Angeler.css";
+
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import { useState } from "react";
+import Swich from "./Swich";
 import { v4 as uuid } from "uuid";
-import { Switch } from "react-router-dom";
 
-defaultModules.set(PnotifyMobile, {});
-defaults.closerHover = false;
+// defaultModules.set(PnotifyMobile, {});
+// defaults.closerHover = false;
 
 function Form({ onSubmit }) {
   const [text, setText] = useState("");
@@ -93,7 +94,7 @@ function Form({ onSubmit }) {
         <button id="addBtn" className="btn btn-main" onClick={handleSubmit}>
           Add
         </button>
-        <Switch />
+        <Swich />
       </div>
     </div>
   );

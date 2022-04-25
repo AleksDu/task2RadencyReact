@@ -1,48 +1,54 @@
-import { alert, defaultModules, defaults } from '@pnotify/core';
-import '@pnotify/core/dist/PNotify.css';
-import * as PnotifyMobile from 'pnotify-mobile';
-import 'pnotify-mobile/dist/pnotify.mobile.css';
-import 'pnotify/core/dist/Angeler.css';
-
+// eslint-disable-next-line
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import { useState } from "react";
 
-
 function Modal({ modalData, closeModal, submitEdit }) {
-    const [text, setText] = useState(modalData.text);
-    const [category, setCategory] = useState(modalData.category);
-    const [noteId, setNoteId] = useState(modalData.id);
+  const [text, setText] = useState(modalData.text);
+  const [category, setCategory] = useState(modalData.category);
+  const [noteId, setNoteId] = useState(modalData.id);
+  // eslint-disable-next-line
+  const handleTextNote = (e) => {
+    setText(e.target.value);
+  };
+  // eslint-disable-next-line
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
+  const handleSubmitEdit = (e) => {
+    if (text === "") {
+      alert({
+        text: "Please write something",
+        type: "notice",
+        delay: 2500,
+        styling: "angeler",
+        icons: "angeler",
+      });
+      return;
+    } else if (category === "null") {
+      alert({
+        text: "PLease select a category",
+        type: "notice",
+        delay: 2000,
+        styling: "angeler",
+        icons: "angeler",
+      });
+      return;
+    }
+    const editObj = {
+      id: e.target.id,
+      text,
+      category,
+    };
+    submitEdit(editObj);
+    setText("");
+    setCategory("null");
+    setNoteId(null);
+    closeModal();
+  };
 
-    const handleTextNote = (e) => {
-        setText(e.target.value);
-    }
-    const handleCategory = (e) => {
-        setCategory(e.target.value);
-    }
-    const handleSubmitEdit = (e) => {
-         if (text === '') {
-            alert({ text: 'Please write something', type: 'notice', delay: 2500, styling: 'angeler', icons: 'angeler' })
-            return
-        } else if (category == 'null') {
-            alert({ text: 'PLease select a category', type: 'notice', delay: 2000, styling: 'angeler', icons: 'angeler' })
-            return
-        }
-        const obj = {
-            id: e.target.id,
-            text,
-            category,
-            
-        }
-        submitEdit(obj)
-        setText('')
-        setCategory('null')
-        setNoteId(null)
-        closeModal()
-    }
-
-    return (
-        <div class="modal" id="exampleModal" tabindex="-1">
+  return (
+    <div class="modal" id="exampleModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -97,24 +103,32 @@ function Modal({ modalData, closeModal, submitEdit }) {
             >
               Close
             </button>
+            <button
+              id={noteId}
+              onClick={handleSubmitEdit}
+              type="button"
+              className="btn btn-main"
+            >
+              Save changes
+            </button>
           </div>
         </div>
       </div>
-        </div>
-    )
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
-    return {
-        modalData: state.modal,
-    }
-}
+  return {
+    modalData: state.modal,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        closeModal: () => dispatch(actions.closeModal()),
-        submitEdit: (obj) => dispatch(actions.submitEdit(obj)),
-    }
-}
+  return {
+    closeModal: () => dispatch(actions.closeModal()),
+    submitEdit: (editObj) => dispatch(actions.editNote(editObj)),
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modal)
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);

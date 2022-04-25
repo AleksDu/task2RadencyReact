@@ -1,28 +1,31 @@
-import { Switch, Route } from "react-router-dom";
-import './App.scss'
-import Entitys from "./components/entytys/Entitys";
+import { connect } from "react-redux";
+import "./App.scss";
+import Entity from "./components/entitys/Entity";
 import Form from "./components/forms/Form";
 import Table from "./components/table/Table";
-const containerStyles = {
-  maxWidth: 1170,
-  marginLeft: "auto",
-  marginRight: "auto",
-  paddingLeft: 15,
-  paddingRight: 15,
-};
+import Modal from "./components/modal/Modal";
+import ArchiveEntity from "./components/entitys/ArchiveEntitys";
 
-export default function App() {
+function App({ modalData, showArchived }) {
   return (
-    <div style={containerStyles}>
-
-      <Switch>
-        <Route path="/skip-first-render">
-          <Entitys />
-        </Route>
-
-        <hr />
-        <Table />
-      </Switch>
+    <div className="App container a-3">
+      {modalData.isOpen && <Modal />}
+      <Form />
+      <hr />
+      <ul className="row container-fluid">
+        {showArchived ? <ArchiveEntity /> : <Entity />}
+      </ul>
+      <hr />
+      <Table />
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    modalData: state.modal,
+    showArchived: state.showArchived,
+  };
+};
+
+export default connect(mapStateToProps)(App);
