@@ -3,7 +3,8 @@ import * as actions from "../../actions";
 import { useEffect } from "react";
 
 function TableRows({ notesArray, onUpdate }) {
-    UseEffect(() => {
+
+    useEffect(() => {
         const data=getTableData()
         onUpdate(data)
     })

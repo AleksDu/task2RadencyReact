@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import EmptyShow from "./EmptyShow";
 
-function Entitys({ notesAray, unarciveNote }) {
+function Entitys({ notesAray, unarchiveNote }) {
     const allArchived = notesAray.filter(note => note.isArchived === true);
     const entitysMarkup = allArchived.map((note, index) => {
         const markup =
@@ -16,7 +16,7 @@ function Entitys({ notesAray, unarciveNote }) {
                           <p className="card-text text-info">Category : {
                             note.category
                           }</p>
-                <button id={note.id} className="btn btn-success" onclick={unArchiveNote}>Unarchive</button>
+                <button id={note.id} className="btn btn-success" onclick={unarchiveNote}>Unarchive</button>
                 </div>
             </div>  
         return (
