@@ -50,17 +50,18 @@ function Form({ onSubmit }: Props) {
     }
     const id: string = uuid();
     const obj: Note = {
-      id: id,
       text: text,
       category: category,
-      time: dateTime,
       isArchived: false,
+      time: dateTime,
+      id: id,
     };
     onSubmit(obj);
 
     setText("");
     setCategory("null");
-  };
+  }
+
   return (
     <div className="card text-dark bg-light b-3">
       <div className="body-card">

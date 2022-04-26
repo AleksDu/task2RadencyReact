@@ -6,9 +6,9 @@ import {State, Id, ModalData, Note} from "../types";
 const initialState = {
   notes: [
     {
-      text: "Shopping list",
-      category: "Task",
+      text: " 3/05/2021, 5/05/2021 Shopping list",
       time: "2021-4-20 | 10:17",
+      category: "Task",
       dates: [],
       isArchived: "false",
       id: 1,
@@ -64,9 +64,9 @@ const initialState = {
   ],
   tableData: [],
   modal: {
+      text: "",
+      category: "",
     isOpen: false,
-    text: "",
-    category: "",
     id: "",
   },
   showArchived: false,
@@ -135,7 +135,7 @@ const reducer = createReducer(initialState, (builder) =>
             actions.archiveNote, (state, action) => {
                 const newNotes = state.notes.map((note) => {
                     if (note.id == action.payload) {
-                    return {...note, archived: true};
+                    return {...note, isArchived: true};
                     }
                     return note
                 })
@@ -149,7 +149,7 @@ const reducer = createReducer(initialState, (builder) =>
             actions.unarchiveNote, (state, action) => {
             const newNotes = state.notes.map((note) => {
                 if (note.id == action.payload) {
-                return {...note, archived: false};
+                return {...note, isArchived: false};
                 }
                 return note
             })

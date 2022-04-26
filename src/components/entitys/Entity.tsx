@@ -13,18 +13,22 @@ interface Props {
   archiveNote: (id: string) => void,
 }
 
-function Entity({ archiveNote, openModal, deleteNote, notesArray }: Props) {
-  const handleArchive: MouseEventHandler<HTMLButtonElement> = (e) => {
-    archiveNote((e.target! as HTMLButtonElement).id);
-  };
-  const handleDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
-    deleteNote((e.target! as HTMLButtonElement).id);
-  };
+function Entity({ notesArray, deleteNote, archiveNote, openModal }: Props) {
+  
   const handleOpenModal: MouseEventHandler<HTMLButtonElement> = (e) => {
     openModal((e.target! as HTMLButtonElement).id);
   };
 
+  const handleArchive: MouseEventHandler<HTMLButtonElement> = (e) => {
+    archiveNote((e.target! as HTMLButtonElement).id);
+  };
+
+  const handleDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
+    deleteNote((e.target! as HTMLButtonElement).id);
+  };
+
   const allActive = notesArray.filter((note) => note.isArchived == false);
+
   const dates = allActive.map((note) => {
     const dateType =
       /(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}/g;
@@ -49,27 +53,27 @@ function Entity({ archiveNote, openModal, deleteNote, notesArray }: Props) {
         style={{ width: 19 + "rem" }}
       >
         <div className="card-body">
-          <h6>${note.time}</h6>
+          <h6>{note.time}</h6>
           <p className="card-text">
-            ${note.text.replace(/</g, "&lt;").replace(/</g, "&gt")}
+            {note.text.replace(/</g, "&lt;").replace(/</g, "&gt")}
           </p>
 
-          <p className="card-text text-info">Category : ${note.category}</p>
+          <p className="card-text text-info">Category : {note.category}</p>
           {dates[index].length > 0 ? (
-            <p className="card-text text-danger">Dates: ${dates[index]}</p>
+            <p className="card-text text-danger">DATES: {dates[index]}</p>
           ) : null}
-          <button id="{note.id}" className="btn btn-info" onClick={handleOpenModal}>
+          <button id={note.id} onClick={handleOpenModal} className="btn btn-info" >
             Edit
           </button>
           <button
-            id="{note.id}"
+            id={note.id}
             className="btn btn-danger a-2"
             onClick={handleDelete}
           >
             Delete
           </button>
           <button
-            id="{note.id}"
+            id={note.id}
             className="btn btn-success a-2"
             onClick={handleArchive}
           >
