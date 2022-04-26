@@ -128,7 +128,8 @@ const reducer = createReducer(initialState, (builder) =>
       notes: newNotes,
     };
     }
-    ).addCase(
+    )
+      .addCase(
       actions.archiveNote, (state, action) => {
 
  

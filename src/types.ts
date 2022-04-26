@@ -16,7 +16,7 @@ export type ModalData = {
 export type Id = number | string
 
 export type Note = {
-    id: Id,
+    id: string,
     text: string,
     category: string,
     isArchived: boolean,

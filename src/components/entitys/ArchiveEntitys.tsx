@@ -2,7 +2,19 @@ import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import EmptyShow from "./EmptyShow";
 
-function Entity({ notesArray, unarchiveNote }) {
+import { Note, State } from "../../types";
+import { AppDispatch } from "../../redux/store";
+import { MouseEventHandler } from "react";
+
+interface Props {
+  notesArray: Note[];
+  unarchiveNote: (id: string) => void;
+}
+
+function Entity({ notesArray, unarchiveNote }: Props) {
+  const handleUnarchive: MouseEventHandler<HTMLButtonElement> = (e) => {
+    unarchiveNote((e.target! as HTMLButtonElement).id);
+  };
   const allArchived = notesArray.filter((note) => note.isArchived == true);
   const entitysMarkup = allArchived.map((note, index) => {
     const markup = (
@@ -21,7 +33,7 @@ function Entity({ notesArray, unarchiveNote }) {
           <button
             id={note.id}
             className="btn btn-success"
-            onClick={unarchiveNote}
+            onClick={handleUnarchive}
           >
             Unarchive
           </button>
@@ -30,17 +42,18 @@ function Entity({ notesArray, unarchiveNote }) {
     );
     return markup;
   });
-  return entitysMarkup.length > 0 ? entitysMarkup : <EmptyShow />;
+  return (<>{entitysMarkup.length > 0 ? entitysMarkup : <EmptyShow />}</>);
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: State) => {
   return {
     notesArray: state.notes,
   };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    unarchiveNote: (e) => dispatch(actions.unarchiveNote(e.target.id)),
+    unarchiveNote: (id: string) => dispatch(actions.unarchiveNote(id)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Entity);
+
