@@ -5,21 +5,27 @@ import * as PNotifyMobile from "@pnotify/mobile";
 import "@pnotify/mobile/dist/PNotifyMobile.css";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
-import { useState } from "react";
+import { ChangeEvent, ChangeEventHandler, FormEvent, MouseEventHandler, useState, VoidFunctionComponent } from 'react'
+import { ModalData, State, SubmitEdit } from '../../types'
+import { AppDispatch } from '../../redux/store'
 
-function Modal({ modalData, closeModal, submitEdit }) {
+interface Props {
+  modalData: ModalData,
+  closeModal: () => void,
+  submitEdit: (cred: SubmitEdit) => void,
+}
+
+function Modal({ modalData, closeModal, submitEdit }: Props) {
   const [text, setText] = useState(modalData.text);
   const [category, setCategory] = useState(modalData.category);
   const [noteId, setNoteId] = useState(modalData.id);
-  // eslint-disable-next-line
-  const handleTextNote = (e) => {
+  const handleTextNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
-  // eslint-disable-next-line
-  const handleCategory = (e) => {
+  const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
-  const handleSubmitEdit = (e) => {
+  const handleSubmitEdit = (e: FormEvent) => {
     if (text === "") {
       alert({
         text: "Please write something",
@@ -36,19 +42,19 @@ function Modal({ modalData, closeModal, submitEdit }) {
       return;
     }
     const editObj = {
-      id: e.target.id,
+      id: (e.target as HTMLButtonElement).id,
       text: text,
       category: category,
     };
     submitEdit(editObj);
     setText("");
     setCategory("");
-    setNoteId(null);
+    setNoteId('');
     closeModal();
   };
 
   return (
-    <div className="modal" id="exampleModal" tabindex="-1">
+    <div className="modal" id="exampleModal" tabindex={-1}>
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -125,16 +131,16 @@ function Modal({ modalData, closeModal, submitEdit }) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: State) => {
   return {
     modalData: state.modal,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
     closeModal: () => dispatch(actions.closeModal()),
-    submitEdit: (editObj) => dispatch(actions.editNote(editObj)),
+    submitEdit: (editObj: SubmitEdit) => dispatch(actions.editNote(editObj)),
   };
 };
 

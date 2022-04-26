@@ -20,7 +20,7 @@ function Entity({ notesArray, unarchiveNote }) {
           <p className="card-text text-info">Category : {note.category}</p>
           <button
             id={note.id}
-            className="btn btn-success a-2"
+            className="btn btn-success"
             onClick={unarchiveNote}
           >
             Unarchive

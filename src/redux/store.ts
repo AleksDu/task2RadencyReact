@@ -1,6 +1,7 @@
-// eslint-disable-next-line
-import { configureStore, createReducer } from "@reduxjs/toolkit";
+import { configureStore, createReducer, PayloadAction } from "@reduxjs/toolkit";
 import * as actions from "./actions";
+
+import {State, Id, ModalData, Note} from "../types";
 
 const initialState = {
   notes: [
@@ -71,22 +72,18 @@ const initialState = {
   showArchived: false,
 };
 
-const reducer = createReducer(initialState, {
-  [actions.addNote]: (state, action) => {
-    return {
-      ...state,
-      notes: [...state.notes, action.payload],
-    };
-  },
-  [actions.deleteNote]: (state, action) => {
-    const newNotes = state.notes.filter((note) => note.id != action.payload);
-    return {
-      ...state,
-      notes: newNotes,
-    };
-  },
-  [actions.closeModal]: (state, action) => {
+const reducer = createReducer(initialState, (builder) =>
+  builder
+    .addCase(actions.addNote, (state: State, action: PayloadAction<Note>) => {
+    state.notes.push(action.payload);
+    })
+    .addCase(actions.deleteNote, (state: State, action: PayloadAction<Id>) => {
+    
+    const newNotes = state.notes.filter((note: any) => note.id != action.payload)
+    state.notes = newNotes;
+  }).addCase(actions.closeModal, (state, action) => {
     const closedModal = {
+      id: "",
       text: "",
       category: "",
       isOpen: false,
@@ -95,9 +92,10 @@ const reducer = createReducer(initialState, {
       ...state,
       modal: closedModal,
     };
-  },
-  [actions.openModal]: (state, action) => {
+  }
+  ).addCase(actions.openModal, (state, action) => {
     const newModal = {
+  
       text: state.notes.filter((note) => note.id == action.payload)[0].text,
 
       category: state.notes.filter((note) => note.id == action.payload)[0]
@@ -109,14 +107,18 @@ const reducer = createReducer(initialState, {
       ...state,
       modal: newModal,
     };
-  },
-  [actions.editNote]: (state, action) => {
+  }
+  ).addCase(actions.editNote, (state, action) => {
+    const newNotes = state.notes.map((note) => {
+
+
+  
     const newNotes = state.notes.map((note) => {
       if (note.id == action.payload.id) {
         return {
           ...note,
           text: action.payload.text,
-          category: action.payload.category,
+          category: action.payload.category
         };
       }
       return note;
@@ -125,14 +127,16 @@ const reducer = createReducer(initialState, {
       ...state,
       notes: newNotes,
     };
-  },
+    }
+    ).addCase(
+      actions.archiveNote, (state, action) => {
 
-  [actions.archiveNote]: (state, action) => {
+ 
     const newNotes = state.notes.map((note) => {
       if (note.id == action.payload) {
         return {
           ...note,
-          archived: "true",
+          isArchived: "true",
         };
       }
       return note;
@@ -141,8 +145,9 @@ const reducer = createReducer(initialState, {
       ...state,
       notes: newNotes,
     };
-  },
-  [actions.unarchiveNote]: (state, action) => {
+  }
+  ).addCase(actions.unarchiveNote, (state, action) => {
+  
     const newNotes = state.notes.map((note) => {
       if (note.id == action.payload) {
         return {
@@ -156,24 +161,26 @@ const reducer = createReducer(initialState, {
       ...state,
       notes: newNotes,
     };
-  },
-  [actions.toggleShowArchived]: (state, action) => {
+  }
+  ).addCase(actions.toggleShowArchived, (state, action) => {
     return {
       ...state,
       showArchived: !state.showArchived,
     };
-  },
-  [actions.setTableData]: (state, action) => {
+  }
+  ).addCase(actions.setTableData, (state, action) => {
     return {
       ...state,
-      tableData: action.payload,
+      tableData: action.payload
     };
-  },
-});
+  }
+    )
+);
+
 
 const store = configureStore({
   reducer: reducer,
   devTools: process.env.NODE_ENV !== "production",
 });
 
-export default store;
+export type AppDispatch = typeof store.dispatch;

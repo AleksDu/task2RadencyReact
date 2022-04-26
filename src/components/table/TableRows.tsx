@@ -1,8 +1,22 @@
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
-import { useEffect } from "react";
+import React, { ReactComponentElement, useEffect } from "react";
+import { Note, State } from "../../types";
+import { table } from 'console'
+import { AppDispatch } from "../../redux/store";
 
-function TableRows({ notesArray, onUpdate }) {
+interface TableRowsProps {
+  notesArray: Note[],
+  onUpdate: (data: TableData) => void,
+}
+type TableData = { [key: string]: { active: number, isArchived: number } }[]
+
+type Category = {
+  [key: string]: { active: number, isArchived: number }
+}
+
+
+const  TableRows =({ notesArray, onUpdate }: TableRowsProps) => {
   useEffect(() => {
     const data = getTableData();
     onUpdate(data);
@@ -30,37 +44,39 @@ function TableRows({ notesArray, onUpdate }) {
   };
 
   const tableData = getTableData();
-  const tableMarkup = (tableData) => {
-    const markup = tableData.map((category, index) => {
+  const tableMarkup = (tableData: TableData) => {
+    const markup = tableData.map((category: Category, index: number) => {
       const key = Object.keys(category);
       return (
         <tr key={index}>
           <th scope="row">{key}</th>
-          <td>{category[key].active}</td>
-          <td>{category[key].isArchived}</td>
+          <td>{category[identifier].active}</td>
+          <td>{category[identifier].isArchived}</td>
         </tr>
       );
     });
     return markup;
   };
-  return tableData.length > 0 ? (
+  return ( <>{tableData.length > 0 ? 
     tableMarkup(tableData)
-  ) : (
+   : 
     <h3 className="c-3" style={{ color: "white", fontSize: 19 + "px" }}>
       No data to display
-    </h3>
+    </h3> 
+}</>
   );
+  
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: State) => {
   return {
     notesArray: state.notes,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    onUpdate: (data) => dispatch(actions.setTableData(data)),
+    onUpdate: (data: TableData) => dispatch(actions.setTableData(data)),
   };
 };
 
