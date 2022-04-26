@@ -72,116 +72,115 @@ const initialState = {
   showArchived: false,
 };
 
+
+
 const reducer = createReducer(initialState, (builder) =>
-  builder
-    .addCase(actions.addNote, (state: State, action: PayloadAction<Note>) => {
-    state.notes.push(action.payload);
-    })
-    .addCase(actions.deleteNote, (state: State, action: PayloadAction<Id>) => {
-    
-    const newNotes = state.notes.filter((note: any) => note.id != action.payload)
-    state.notes = newNotes;
-  }).addCase(actions.closeModal, (state, action) => {
-    const closedModal = {
-      id: "",
-      text: "",
-      category: "",
-      isOpen: false,
-    };
-    return {
-      ...state,
-      modal: closedModal,
-    };
-  }
-  ).addCase(actions.openModal, (state, action) => {
-    const newModal = {
-  
-      text: state.notes.filter((note) => note.id == action.payload)[0].text,
-
-      category: state.notes.filter((note) => note.id == action.payload)[0]
-        .category,
-      id: action.payload,
-      isOpen: true,
-    };
-    return {
-      ...state,
-      modal: newModal,
-    };
-  }
-  ).addCase(actions.editNote, (state, action) => {
-    const newNotes = state.notes.map((note) => {
-
-
-  
-    const newNotes = state.notes.map((note) => {
-      if (note.id == action.payload.id) {
-        return {
-          ...note,
-          text: action.payload.text,
-          category: action.payload.category
-        };
-      }
-      return note;
-    });
-    return {
-      ...state,
-      notes: newNotes,
-    };
-    }
+    builder
+        .addCase(
+            actions.addNote, (state, action) => {
+                const newNote = action.payload
+                return {
+                    ...state,
+                    notes: [...state.notes, newNote]
+                }
+            }
     )
-      .addCase(
-      actions.archiveNote, (state, action) => {
-
- 
-    const newNotes = state.notes.map((note) => {
-      if (note.id == action.payload) {
-        return {
-          ...note,
-          isArchived: "true",
-        };
-      }
-      return note;
-    });
-    return {
-      ...state,
-      notes: newNotes,
-    };
-  }
-  ).addCase(actions.unarchiveNote, (state, action) => {
-  
-    const newNotes = state.notes.map((note) => {
-      if (note.id == action.payload) {
-        return {
-          ...note,
-          isArchived: "false",
-        };
-      }
-      return note;
-    });
-    return {
-      ...state,
-      notes: newNotes,
-    };
-  }
-  ).addCase(actions.toggleShowArchived, (state, action) => {
-    return {
-      ...state,
-      showArchived: !state.showArchived,
-    };
-  }
-  ).addCase(actions.setTableData, (state, action) => {
-    return {
-      ...state,
-      tableData: action.payload
-    };
-  }
+        .addCase(
+            actions.deleteNote, (state, action) => {
+                const newNotes = state.notes.filter((note: any) => note.id != action.payload)
+                return {
+                    ...state,
+                    notes: newNotes
+                }
+            }
     )
-);
-
+        .addCase(
+            actions.closeModal, (state, action) => {
+                const closedModal = {text: '', category: '', isOpen: false, id: ''}
+                return {
+                    ...state,
+                    modal: closedModal,
+                }
+            }
+    )
+        .addCase(
+            actions.openModal, (state, action) => {
+                const newModal = {
+                    text: state.notes.filter(note => note.id == action.payload)[0].text,
+                    category: state.notes.filter(note => note.id == action.payload)[0].category,
+                    isOpen: true,
+                    id: action.payload
+                }
+                return {
+                    ...state,
+                    modal: newModal,
+                }
+            }
+    )
+        .addCase(
+            actions.editNote, (state, action) => {
+                const newNotes = state.notes.map((note) => {
+                    if (note.id == action.payload.id) {
+                    return {...note, text: action.payload.text, category: action.payload.category};
+                    }
+                    return note
+                })
+                return {
+                    ...state,
+                    notes: newNotes,
+                }
+            }
+    )
+        .addCase(
+            actions.archiveNote, (state, action) => {
+                const newNotes = state.notes.map((note) => {
+                    if (note.id == action.payload) {
+                    return {...note, archived: true};
+                    }
+                    return note
+                })
+                return {
+                    ...state,
+                    notes: newNotes,
+                }
+            }
+    )
+        .addCase(
+            actions.unarchiveNote, (state, action) => {
+            const newNotes = state.notes.map((note) => {
+                if (note.id == action.payload) {
+                return {...note, archived: false};
+                }
+                return note
+            })
+            return {
+                ...state,
+                notes: newNotes,
+            }
+        }
+    )
+        .addCase(
+            actions.toggleShowArchived, (state, action) => {
+            return {
+                ...state,
+                showArchived: !state.showArchived
+            }
+        }
+    )
+        .addCase(
+            actions.setTableData, (state, action) => {
+                return {
+                    ...state,
+                    tableData: action.payload
+                }
+        }
+    )
+)
 
 const store = configureStore({
   reducer: reducer,
   devTools: process.env.NODE_ENV !== "production",
 });
+export default store;
 
 export type AppDispatch = typeof store.dispatch;

@@ -51,10 +51,10 @@
     ]
   },
   "devDependencies": {
+    "@pnotify/core": "^5.2.0",
     "@types/react-redux": "^7.1.23",
     "@types/redux": "^3.6.0",
     "@types/uuid": "^8.3.4",
-    "@pnotify/core": "^5.2.0",
     "pnotify": "^5.2.0"
   }
 }

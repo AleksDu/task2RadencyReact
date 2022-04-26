@@ -4,21 +4,27 @@ import * as PNotifyMobile from "@pnotify/mobile";
 import "@pnotify/mobile/dist/PNotifyMobile.css";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
-import { useState } from "react";
+import {ChangeEvent, useState } from "react";
 import Swich from "./Swich";
 import { v4 as uuid } from "uuid";
+import { AppDispatch } from "../../redux/store";
+import {Note} from "../../types";
 
 defaultModules.set(PNotifyMobile, {});
 defaults.closerHover = false;
 
-function Form({ onSubmit }) {
+interface Props {
+  onSubmit: (noteObj: Note) => void;
+}
+
+function Form({ onSubmit }: Props) {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("null");
 
-  const handleTextNote = (e) => {
+  const handleTextNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
-  const handleCategory = (e) => {
+  const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
   const handleSubmit = () => {
@@ -42,8 +48,8 @@ function Form({ onSubmit }) {
       });
       return;
     }
-    const id = uuid();
-    const obj = {
+    const id: string = uuid();
+    const obj: Note = {
       id: id,
       text: text,
       category: category,
@@ -94,9 +100,9 @@ function Form({ onSubmit }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    onSubmit: (noteObj) => dispatch(actions.addNote(noteObj)),
+    onSubmit: (noteObj: Note) => dispatch(actions.addNote(noteObj)),
   };
 };
 

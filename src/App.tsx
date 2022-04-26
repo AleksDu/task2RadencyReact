@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import "./App.css";
 import {State, ModalData} from './types'
 import Entity from "./components/entitys/Entity";
@@ -7,7 +7,7 @@ import Table from "./components/table/Table";
 import Modal from "./components/modal/Modal";
 import ArchiveEntitys from "./components/entitys/ArchiveEntitys";
 type Props = {
-  modal: ModalData,
+  modalData: ModalData,
   showArchived: boolean,
 }
 function App({ modalData, showArchived }: Props) {

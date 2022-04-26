@@ -1,7 +1,13 @@
+import {ChangeEvent, ChangeEventHandler} from "react";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
+import { AppDispatch } from "../../redux/store";
 
-function Switch({ showArchived }) {
+interface Props {
+  showArchived: ChangeEventHandler<HTMLInputElement>
+}
+
+function Switch({ showArchived }: Props) {
   return (
     <div className="check-form form-toggle c-3">
       <input
@@ -18,7 +24,7 @@ function Switch({ showArchived }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
     showArchived: () => dispatch(actions.toggleShowArchived()),
   };

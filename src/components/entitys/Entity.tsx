@@ -2,8 +2,28 @@
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import EmptyShow from "./EmptyShow";
+import { Note, State } from "../../types";
+import { MouseEventHandler } from 'react';
+import { AppDispatch } from "../../redux/store";
 
-function Entity({ archiveNote, openModal, deleteNote, notesArray }) {
+interface Props {
+  notesArray: Note[],
+  openModal: (id: string) => void,
+  deleteNote: (id: string) => void,
+  archiveNote: (id: string) => void,
+}
+
+function Entity({ archiveNote, openModal, deleteNote, notesArray }: Props) {
+  const handleArchive: MouseEventHandler<HTMLButtonElement> = (e) => {
+    archiveNote((e.target! as HTMLButtonElement).id);
+  };
+  const handleDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
+    deleteNote((e.target! as HTMLButtonElement).id);
+  };
+  const handleOpenModal: MouseEventHandler<HTMLButtonElement> = (e) => {
+    openModal((e.target! as HTMLButtonElement).id);
+  };
+
   const allActive = notesArray.filter((note) => note.isArchived == false);
   const dates = allActive.map((note) => {
     const dateType =
@@ -15,7 +35,7 @@ function Entity({ archiveNote, openModal, deleteNote, notesArray }) {
     let dates = "";
     if (foundDate.length > 0) {
       foundDate.forEach((date) => {
-        dates += " | " + date + " | ";
+        dates += "0| " + date + " | ";
       });
     }
     return dates;
@@ -38,20 +58,20 @@ function Entity({ archiveNote, openModal, deleteNote, notesArray }) {
           {dates[index].length > 0 ? (
             <p className="card-text text-danger">Dates: ${dates[index]}</p>
           ) : null}
-          <button id="{note.id}" className="btn btn-info" onClick={openModal}>
+          <button id="{note.id}" className="btn btn-info" onClick={handleOpenModal}>
             Edit
           </button>
           <button
             id="{note.id}"
             className="btn btn-danger a-2"
-            onClick={deleteNote}
+            onClick={handleDelete}
           >
             Delete
           </button>
           <button
             id="{note.id}"
             className="btn btn-success a-2"
-            onClick={archiveNote}
+            onClick={handleArchive}
           >
             Archive
           </button>
@@ -61,18 +81,18 @@ function Entity({ archiveNote, openModal, deleteNote, notesArray }) {
 
     return markup;
   });
-  return entityMarkup.length > 0 ? entityMarkup : <EmptyShow />;
+  return (<>{entityMarkup.length > 0 ? entityMarkup : <EmptyShow />}</>);
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: State) => {
   return {
     notesArray: state.notes,
   };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    openModal: (e) => dispatch(actions.openModal(e.target.id)),
-    deleteNote: (e) => dispatch(actions.deleteNote(e.target.id)),
-    archiveNote: (e) => dispatch(actions.archiveNote(e.target.id)),
+    openModal: (id: string) => dispatch(actions.openModal(id)),
+    deleteNote: (id: string) => dispatch(actions.deleteNote(id)),
+    archiveNote: (id: string) => dispatch(actions.archiveNote(id)),
   };
 };
 

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
-import React, { ReactComponentElement, useEffect } from "react";
+import  { useEffect } from "react";
 import { Note, State } from "../../types";
 import { table } from 'console'
 import { AppDispatch } from "../../redux/store";
@@ -9,6 +9,7 @@ interface TableRowsProps {
   notesArray: Note[],
   onUpdate: (data: TableData) => void,
 }
+
 type TableData = { [key: string]: { active: number, isArchived: number } }[]
 
 type Category = {
@@ -47,6 +48,7 @@ const  TableRows =({ notesArray, onUpdate }: TableRowsProps) => {
   const tableMarkup = (tableData: TableData) => {
     const markup = tableData.map((category: Category, index: number) => {
       const key = Object.keys(category);
+      const identifier = key[0]
       return (
         <tr key={index}>
           <th scope="row">{key}</th>
@@ -57,7 +59,8 @@ const  TableRows =({ notesArray, onUpdate }: TableRowsProps) => {
     });
     return markup;
   };
-  return ( <>{tableData.length > 0 ? 
+  return (
+    <>{tableData.length > 0 ? 
     tableMarkup(tableData)
    : 
     <h3 className="c-3" style={{ color: "white", fontSize: 19 + "px" }}>

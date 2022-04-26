@@ -1,11 +1,11 @@
 // eslint-disable-next-line
-import { alert, defaultModules, defaults } from "@pnotify/core";
+import { alert } from "@pnotify/core";
 import "@pnotify/core/dist/PNotify.css";
 import * as PNotifyMobile from "@pnotify/mobile";
 import "@pnotify/mobile/dist/PNotifyMobile.css";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
-import { ChangeEvent, ChangeEventHandler, FormEvent, MouseEventHandler, useState, VoidFunctionComponent } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { ModalData, State, SubmitEdit } from '../../types'
 import { AppDispatch } from '../../redux/store'
 
@@ -54,7 +54,7 @@ function Modal({ modalData, closeModal, submitEdit }: Props) {
   };
 
   return (
-    <div className="modal" id="exampleModal" tabindex={-1}>
+    <div className="modal" id="modal" tabIndex={-1}>
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -77,20 +77,6 @@ function Modal({ modalData, closeModal, submitEdit }: Props) {
                 value={text}
                 onChange={handleTextNote}
               ></textarea>
-              <p className="text-card c-3 font-weight-bold">Choose date</p>
-
-              <div>
-                <input
-                  type="date"
-                  id="editDate"
-                  className="control-form date-input"
-                />
-                <input
-                  type="time"
-                  className="control-form date-input"
-                  id="editTime"
-                />
-              </div>
               <p className="text-card c-3 font-weight-bold">Select category</p>
 
               <select
@@ -110,7 +96,7 @@ function Modal({ modalData, closeModal, submitEdit }: Props) {
           <div className="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
+              className="btn btn-secondary"
               data-dismiss="modal"
               onClick={closeModal}
             >
