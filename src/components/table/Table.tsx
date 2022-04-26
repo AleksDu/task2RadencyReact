@@ -1,7 +1,4 @@
-// eslint-disable-next-line
-import { connect } from "react-redux";
-// eslint-disable-next-line
-import * as actions from "../../redux/actions";
+
 import TableRows from "./TableRows";
 
 function Table() {
@@ -15,7 +12,7 @@ function Table() {
             <th scope="col">Archived</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id='table-body'>
           <TableRows />
         </tbody>
       </table>
