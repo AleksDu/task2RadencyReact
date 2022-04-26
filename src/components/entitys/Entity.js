@@ -4,10 +4,9 @@ import * as actions from "../../redux/actions";
 import EmptyShow from "./EmptyShow";
 
 function Entity({ archiveNote, openModal, deleteNote, notesArray }) {
-  const allActive = notesArray.filter((note) => note.isArchived === false);
+  const allActive = notesArray.filter((note) => note.isArchived == false);
   const dates = allActive.map((note) => {
     const dateType =
-      // eslint-disable-next-line
       /(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}/g;
     const isMatch = [...note.text.matchAll(dateType)];
     const foundDate = isMatch.map((match) => {

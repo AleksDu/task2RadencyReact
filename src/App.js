@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import "./App.scss";
+import "./App.css";
 import Entity from "./components/entitys/Entity";
 import Form from "./components/forms/Form";
 import Table from "./components/table/Table";

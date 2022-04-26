@@ -1,28 +1,27 @@
-import { alert, defaultModules } from '@pnotify/core';
-import '@pnotify/core/dist/PNotify.css';
-import * as PNotifyMobile from '@pnotify/mobile';
-import '@pnotify/mobile/dist/PNotifyMobile.css';
-import { connect } from 'react-redux';
-import * as actions from '../../redux/actions';
-import { useState } from 'react';
-import Swich from './Swich';
-import { v4 as uuid } from 'uuid';
-console.log('asdasd');
+import { alert, defaultModules } from "@pnotify/core";
+import "@pnotify/core/dist/PNotify.css";
+import * as PNotifyMobile from "@pnotify/mobile";
+import "@pnotify/mobile/dist/PNotifyMobile.css";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions";
+import { useState } from "react";
+import Swich from "./Swich";
+import { v4 as uuid } from "uuid";
 
 defaultModules.set(PNotifyMobile, {});
 
 alert({
-  text: 'Notice me, senpai!',
+  text: "Notice me, senpai!",
 });
 
 function Form({ onSubmit }) {
-  const [text, setText] = useState('');
-  const [category, setCategory] = useState('null');
+  const [text, setText] = useState("");
+  const [category, setCategory] = useState("null");
 
-  const handleTextNote = e => {
+  const handleTextNote = (e) => {
     setText(e.target.value);
   };
-  const handleCategory = e => {
+  const handleCategory = (e) => {
     setCategory(e.target.value);
   };
   const handleSubmit = () => {
@@ -31,22 +30,22 @@ function Form({ onSubmit }) {
       now.getMonth() + 1
     }-${now.getDate()} | ${now.getHours()}:${now.getMinutes()}`;
 
-    if (text === '') {
+    if (text === "") {
       alert({
-        text: 'Please write something',
-        type: 'notice',
+        text: "Please write something",
+        type: "notice",
         delay: 2500,
-        styling: 'angeler',
-        icons: 'angeler',
+        styling: "angeler",
+        icons: "angeler",
       });
       return;
-    } else if (category === 'null') {
+    } else if (category === "null") {
       alert({
-        text: 'PLease select a category',
-        type: 'notice',
+        text: "PLease select a category",
+        type: "notice",
         delay: 2000,
-        styling: 'angeler',
-        icons: 'angeler',
+        styling: "angeler",
+        icons: "angeler",
       });
       return;
     }
@@ -59,8 +58,8 @@ function Form({ onSubmit }) {
       isArchived: false,
     };
     onSubmit(obj);
-    setText('');
-    setCategory('null');
+    setText("");
+    setCategory("null");
   };
   return (
     <div className="card text-dark bg-light b-3">
@@ -101,9 +100,9 @@ function Form({ onSubmit }) {
   );
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: note => dispatch(actions.addNote(note)),
+    onSubmit: (note) => dispatch(actions.addNote(note)),
   };
 };
 
