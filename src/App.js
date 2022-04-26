@@ -4,7 +4,7 @@ import Entity from "./components/entitys/Entity";
 import Form from "./components/forms/Form";
 import Table from "./components/table/Table";
 import Modal from "./components/modal/Modal";
-import ArchiveEntity from "./components/entitys/ArchiveEntitys";
+import ArchiveEntitys from "./components/entitys/ArchiveEntitys";
 
 function App({ modalData, showArchived }) {
   return (
@@ -13,7 +13,7 @@ function App({ modalData, showArchived }) {
       <Form />
       <hr />
       <ul className="row container-fluid">
-        {showArchived ? <ArchiveEntity /> : <Entity />}
+        {showArchived ? <ArchiveEntitys /> : <Entity />}
       </ul>
       <hr />
       <Table />

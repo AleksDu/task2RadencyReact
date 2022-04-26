@@ -1,4 +1,4 @@
-import { alert, defaultModules } from "@pnotify/core";
+import { alert, defaultModules, defaults } from "@pnotify/core";
 import "@pnotify/core/dist/PNotify.css";
 import * as PNotifyMobile from "@pnotify/mobile";
 import "@pnotify/mobile/dist/PNotifyMobile.css";
@@ -9,10 +9,7 @@ import Swich from "./Swich";
 import { v4 as uuid } from "uuid";
 
 defaultModules.set(PNotifyMobile, {});
-
-alert({
-  text: "Notice me, senpai!",
-});
+defaults.closerHover = false;
 
 function Form({ onSubmit }) {
   const [text, setText] = useState("");
@@ -34,30 +31,27 @@ function Form({ onSubmit }) {
       alert({
         text: "Please write something",
         type: "notice",
-        delay: 2500,
-        styling: "angeler",
-        icons: "angeler",
+        delay: 2000,
       });
       return;
-    } else if (category === "null") {
+    } else if (category == "null") {
       alert({
         text: "PLease select a category",
         type: "notice",
         delay: 2000,
-        styling: "angeler",
-        icons: "angeler",
       });
       return;
     }
     const id = uuid();
     const obj = {
-      id,
-      text,
-      category,
+      id: id,
+      text: text,
+      category: category,
       time: dateTime,
       isArchived: false,
     };
     onSubmit(obj);
+
     setText("");
     setCategory("null");
   };
@@ -102,7 +96,7 @@ function Form({ onSubmit }) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (note) => dispatch(actions.addNote(note)),
+    onSubmit: (noteObj) => dispatch(actions.addNote(noteObj)),
   };
 };
 

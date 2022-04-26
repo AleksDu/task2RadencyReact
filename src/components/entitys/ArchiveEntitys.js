@@ -2,8 +2,8 @@ import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import EmptyShow from "./EmptyShow";
 
-function Entitys({ notesAray, unarchiveNote }) {
-  const allArchived = notesAray.filter((note) => note.isArchived === true);
+function Entity({ notesArray, unarchiveNote }) {
+  const allArchived = notesArray.filter((note) => note.isArchived == true);
   const entitysMarkup = allArchived.map((note, index) => {
     const markup = (
       <div
@@ -20,10 +20,10 @@ function Entitys({ notesAray, unarchiveNote }) {
           <p className="card-text text-info">Category : {note.category}</p>
           <button
             id={note.id}
-            className="btn btn-success"
-            onclick={unarchiveNote}
+            className="btn btn-success a-2"
+            onClick={unarchiveNote}
           >
-            unarchiveNote
+            Unarchive
           </button>
         </div>
       </div>
@@ -34,7 +34,7 @@ function Entitys({ notesAray, unarchiveNote }) {
 }
 const mapStateToProps = (state) => {
   return {
-    notesAray: state.notes,
+    notesArray: state.notes,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -43,4 +43,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Entitys);
+export default connect(mapStateToProps, mapDispatchToProps)(Entity);

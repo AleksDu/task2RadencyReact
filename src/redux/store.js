@@ -9,7 +9,7 @@ const initialState = {
       category: "Task",
       time: "2021-4-20 | 10:17",
       dates: [],
-      archived: "false",
+      isArchived: "false",
       id: 1,
     },
     {
@@ -17,7 +17,7 @@ const initialState = {
       category: "Random Thought",
       time: "2021-4-27 | 10:15",
       dates: ["3/05/2021, 5/05/2021"],
-      archived: "false",
+      isArchived: "false",
       id: 2,
     },
     {
@@ -25,7 +25,7 @@ const initialState = {
       category: "Idea",
       time: "2021-5-5 | 10:30",
       dates: [],
-      archived: "true",
+      isArchived: "true",
       id: 3,
     },
     {
@@ -33,7 +33,7 @@ const initialState = {
       category: "Quote",
       time: "2022-5-7 | 11:00",
       dates: [],
-      archived: "true",
+      isArchived: "true",
       id: 4,
     },
     {
@@ -41,7 +41,7 @@ const initialState = {
       category: "Task",
       time: "2021-5-15 | 10:35",
       dates: [],
-      archived: "true",
+      isArchived: "true",
       id: 5,
     },
     {
@@ -49,7 +49,7 @@ const initialState = {
       category: "Evil",
       time: "2022-5-1 | 13:12",
       dates: [],
-      archived: "false",
+      isArchived: "false",
       id: 6,
     },
     {
@@ -57,7 +57,7 @@ const initialState = {
       category: "Strong",
       time: "01-01-01 | 00:00",
       dates: [],
-      archived: "true",
+      isArchived: "true",
       id: 7,
     },
   ],
@@ -79,30 +79,31 @@ const reducer = createReducer(initialState, {
     };
   },
   [actions.deleteNote]: (state, action) => {
-    const newNotes = state.notes.filter((note) => note.id !== action.payload);
+    const newNotes = state.notes.filter((note) => note.id != action.payload);
     return {
       ...state,
       notes: newNotes,
     };
   },
   [actions.closeModal]: (state, action) => {
-    const closeModal = {
+    const closedModal = {
       text: "",
       category: "",
       isOpen: false,
     };
     return {
       ...state,
-      modal: closeModal,
+      modal: closedModal,
     };
   },
   [actions.openModal]: (state, action) => {
     const newModal = {
-      text: state.notes.filter((note) => note.id === action.payload)[0].text,
-      category: state.notes.filter((note) => note.id === action.payload)[0]
+      text: state.notes.filter((note) => note.id == action.payload)[0].text,
+
+      category: state.notes.filter((note) => note.id == action.payload)[0]
         .category,
-      isOpen: true,
       id: action.payload,
+      isOpen: true,
     };
     return {
       ...state,
@@ -111,7 +112,7 @@ const reducer = createReducer(initialState, {
   },
   [actions.editNote]: (state, action) => {
     const newNotes = state.notes.map((note) => {
-      if (note.id === action.payload.id) {
+      if (note.id == action.payload.id) {
         return {
           ...note,
           text: action.payload.text,
@@ -128,7 +129,7 @@ const reducer = createReducer(initialState, {
 
   [actions.archiveNote]: (state, action) => {
     const newNotes = state.notes.map((note) => {
-      if (note.id === action.payload) {
+      if (note.id == action.payload) {
         return {
           ...note,
           archived: "true",
@@ -143,10 +144,10 @@ const reducer = createReducer(initialState, {
   },
   [actions.unarchiveNote]: (state, action) => {
     const newNotes = state.notes.map((note) => {
-      if (note.id === action.payload) {
+      if (note.id == action.payload) {
         return {
           ...note,
-          archived: "false",
+          isArchived: "false",
         };
       }
       return note;

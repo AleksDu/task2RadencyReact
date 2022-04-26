@@ -1,4 +1,8 @@
 // eslint-disable-next-line
+import { alert, defaultModules, defaults } from "@pnotify/core";
+import "@pnotify/core/dist/PNotify.css";
+import * as PNotifyMobile from "@pnotify/mobile";
+import "@pnotify/mobile/dist/PNotifyMobile.css";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import { useState } from "react";
@@ -20,9 +24,7 @@ function Modal({ modalData, closeModal, submitEdit }) {
       alert({
         text: "Please write something",
         type: "notice",
-        delay: 2500,
-        styling: "angeler",
-        icons: "angeler",
+        delay: 2000,
       });
       return;
     } else if (category === "null") {
@@ -30,62 +32,67 @@ function Modal({ modalData, closeModal, submitEdit }) {
         text: "PLease select a category",
         type: "notice",
         delay: 2000,
-        styling: "angeler",
-        icons: "angeler",
       });
       return;
     }
     const editObj = {
       id: e.target.id,
-      text,
-      category,
+      text: text,
+      category: category,
     };
     submitEdit(editObj);
     setText("");
-    setCategory("null");
+    setCategory("");
     setNoteId(null);
     closeModal();
   };
 
   return (
-    <div class="modal" id="exampleModal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit note</h5>
+    <div className="modal" id="exampleModal" tabindex="-1">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Edit note</h5>
             <button
               type="button"
-              class="close"
+              className="close"
               data-dismiss="modal"
               aria-label="Close"
-              onclick="closeModal()"
+              onClick={closeModal}
             ></button>
           </div>
-          <div class="modal-body">
-            <div class="form-group">
+          <div className="modal-body">
+            <div className="form-group">
               <textarea
                 id="editNote"
-                class="control-form"
+                className="control-form"
                 aria-label="With textarea"
                 placeholder="Enter your note"
+                value={text}
+                onChange={handleTextNote}
               ></textarea>
-              <p class="text-card c-3 font-weight-bold">Choose date</p>
+              <p className="text-card c-3 font-weight-bold">Choose date</p>
 
               <div>
                 <input
                   type="date"
                   id="editDate"
-                  class="control-form date-input"
+                  className="control-form date-input"
                 />
                 <input
                   type="time"
-                  class="control-form date-input"
+                  className="control-form date-input"
                   id="editTime"
                 />
               </div>
-              <p class="text-card c-3 font-weight-bold">Select category</p>
+              <p className="text-card c-3 font-weight-bold">Select category</p>
 
-              <select class="form-select" id="select-modal">
+              <select
+                className="form-select"
+                id="select-modal"
+                value={category}
+                onChange={handleCategory}
+              >
                 <option value="null">Choose category</option>
                 <option value="Task">Task</option>
                 <option value="Idea">Idea</option>
@@ -94,12 +101,12 @@ function Modal({ modalData, closeModal, submitEdit }) {
               </select>
             </div>
           </div>
-          <div class="modal-footer">
+          <div className="modal-footer">
             <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
-              onclick="closeModal()"
+              onClick={closeModal}
             >
               Close
             </button>

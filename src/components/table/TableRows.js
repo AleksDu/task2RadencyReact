@@ -18,7 +18,7 @@ function TableRows({ notesArray, onUpdate }) {
             (note) =>
               note.category === uniqueCategories && note.isArchived === false
           ).length,
-          archived: notesArray.filter(
+          isArchived: notesArray.filter(
             (note) =>
               note.category === uniqueCategories && note.isArchived === true
           ).length,
@@ -37,7 +37,7 @@ function TableRows({ notesArray, onUpdate }) {
         <tr key={index}>
           <th scope="row">{key}</th>
           <td>{category[key].active}</td>
-          <td>{category[key].archived}</td>
+          <td>{category[key].isArchived}</td>
         </tr>
       );
     });

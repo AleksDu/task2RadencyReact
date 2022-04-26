@@ -38,20 +38,20 @@ function Entity({ archiveNote, openModal, deleteNote, notesArray }) {
           {dates[index].length > 0 ? (
             <p className="card-text text-danger">Dates: ${dates[index]}</p>
           ) : null}
-          <button id="{note.id}" className="btn btn-info" onclick={openModal}>
+          <button id="{note.id}" className="btn btn-info" onClick={openModal}>
             Edit
           </button>
           <button
             id="{note.id}"
-            className="btn btn-danger"
-            onclick={deleteNote}
+            className="btn btn-danger a-2"
+            onClick={deleteNote}
           >
             Delete
           </button>
           <button
             id="{note.id}"
-            className="btn btn-success"
-            onclick={archiveNote}
+            className="btn btn-success a-2"
+            onClick={archiveNote}
           >
             Archive
           </button>

@@ -1,11 +1,11 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const addNote = createAction("note/add");
-export const deleteNote = createAction("note/delete");
-export const editNote = createAction("note/edit");
-export const archiveNote = createAction("note/archive");
-export const unarchiveNote = createAction("note/unarchive");
-export const setTableData = createAction("note/setTableData");
-export const closeModal = createAction("note/closeModal");
-export const openModal = createAction("note/openModal");
-export const toggleShowArchived = createAction("page/toggleShowArchived");
+export const addNote = createAction("note/ADD");
+export const deleteNote = createAction("note/DELETE");
+export const editNote = createAction("note/EDIT");
+export const archiveNote = createAction("note/ARCHIVE");
+export const unarchiveNote = createAction("note/UNARCHIVE");
+export const setTableData = createAction("note/SET_TABLE_DATA");
+export const closeModal = createAction("note/CLOSE_MODAL");
+export const openModal = createAction("note/OPEN_MODAL");
+export const toggleShowArchived = createAction("page/TOGGLE_SHOW_ARCHIVED");
